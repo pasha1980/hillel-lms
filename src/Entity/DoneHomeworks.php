@@ -3,17 +3,16 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Lesson
+ * Class DoneHomeworks
  * @package App\Entity
  * @ORM\Entity()
- * @ORM\Table(name="lessons")
+ * @ORM\Table(name="doneHomeworks")
  */
-class Lesson
+
+class DoneHomeworks
 {
     /**
      * @var int|null
@@ -27,13 +26,13 @@ class Lesson
      * @var string|null
      * @ORM\Column(type="string")
      */
-    private ?string $title;
+    private ?string $text;
 
     /**
      * @var string|null
      * @ORM\Column(type="string")
      */
-    private ?string $description;
+    private ?string $reply;
 
     /**
      * @var \DateTime|null
@@ -48,23 +47,18 @@ class Lesson
     private ?\DateTime $updatedAt;
 
     /**
-     * Many Lessons have one Group
-     * @var Group|null
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="lessons")
-     */
-    private $groups;
-
-    /**
-     * One Lesson has many Homeworks
-     * @var Collection
-     * @ORM\OneToMany(targetEntity="Homework", mappedBy="lessons")
+     * Many DoneHomeworks have one Homework
+     * @var Homework|null
+     * @ORM\ManyToOne(targetEntity="Homework", inversedBy="doneHomeworks")
      */
     private $homeworks;
 
-    public function __construct()
-    {
-        $this->homeworks = new ArrayCollection();
-    }
+    /**
+     * Many DoneHomework has one Student
+     * @var Student|null
+     * @ORM\ManyToOne(targetEntity="Student", inversedBy="doneHomework")
+     */
+    private $student;
 
     /**
      * @return int|null
@@ -85,33 +79,33 @@ class Lesson
     /**
      * @return string|null
      */
-    public function getTitle(): ?string
+    public function getText(): ?string
     {
-        return $this->title;
+        return $this->text;
     }
 
     /**
-     * @param string|null $title
+     * @param string|null $text
      */
-    public function setTitle(?string $title): void
+    public function setText(?string $text): void
     {
-        $this->title = $title;
+        $this->text = $text;
     }
 
     /**
      * @return string|null
      */
-    public function getDescription(): ?string
+    public function getReply(): ?string
     {
-        return $this->description;
+        return $this->reply;
     }
 
     /**
-     * @param string|null $description
+     * @param string|null $reply
      */
-    public function setDescription(?string $description): void
+    public function setReply(?string $reply): void
     {
-        $this->description = $description;
+        $this->reply = $reply;
     }
 
     /**
@@ -147,28 +141,34 @@ class Lesson
     }
 
     /**
-     * @return mixed
+     * @return Homework|null
      */
-    public function getHomeworks()
+    public function getHomeworks(): ?Homework
     {
         return $this->homeworks;
     }
 
     /**
-     * @return Group|null
+     * @param Homework|null $homeworks
      */
-    public function getGroups(): ?Group
+    public function setHomeworks(?Homework $homeworks): void
     {
-        return $this->groups;
+        $this->homeworks = $homeworks;
     }
 
     /**
-     * @param Group|null $groups
+     * @return Student|null
      */
-    public function setGroups(?Group $groups): void
+    public function getStudent(): ?Student
     {
-        $this->groups = $groups;
+        return $this->student;
     }
 
-
+    /**
+     * @param Student|null $student
+     */
+    public function setStudent(?Student $student): void
+    {
+        $this->student = $student;
+    }
 }

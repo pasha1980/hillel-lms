@@ -8,12 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Lesson
+ * Class Homework
  * @package App\Entity
  * @ORM\Entity()
- * @ORM\Table(name="lessons")
+ * @ORM\Table(name="homeworks")
  */
-class Lesson
+class Homework
 {
     /**
      * @var int|null
@@ -33,7 +33,7 @@ class Lesson
      * @var string|null
      * @ORM\Column(type="string")
      */
-    private ?string $description;
+    private ?string $text;
 
     /**
      * @var \DateTime|null
@@ -48,22 +48,22 @@ class Lesson
     private ?\DateTime $updatedAt;
 
     /**
-     * Many Lessons have one Group
-     * @var Group|null
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="lessons")
+     * Many Homeworks have one Lesson
+     * @var Lesson|null
+     * @ORM\ManyToOne(targetEntity="Lesson", inversedBy="groups")
      */
-    private $groups;
+    private $lessons;
 
     /**
-     * One Lesson has many Homeworks
+     * One Homework has many DoneHomeworks
      * @var Collection
-     * @ORM\OneToMany(targetEntity="Homework", mappedBy="lessons")
+     * @ORM\OneToMany(targetEntity="DoneHomeworks", mappedBy="homeworks")
      */
-    private $homeworks;
+    private $doneHomeworks;
 
     public function __construct()
     {
-        $this->homeworks = new ArrayCollection();
+        $this->doneHomeworks = new ArrayCollection();
     }
 
     /**
@@ -101,17 +101,17 @@ class Lesson
     /**
      * @return string|null
      */
-    public function getDescription(): ?string
+    public function getText(): ?string
     {
-        return $this->description;
+        return $this->text;
     }
 
     /**
-     * @param string|null $description
+     * @param string|null $text
      */
-    public function setDescription(?string $description): void
+    public function setText(?string $text): void
     {
-        $this->description = $description;
+        $this->text = $text;
     }
 
     /**
@@ -147,28 +147,26 @@ class Lesson
     }
 
     /**
-     * @return mixed
+     * @return Lesson|null
      */
-    public function getHomeworks()
+    public function getLessons(): ?Lesson
     {
-        return $this->homeworks;
+        return $this->lessons;
     }
 
     /**
-     * @return Group|null
+     * @param Lesson|null $lessons
      */
-    public function getGroups(): ?Group
+    public function setLessons(?Lesson $lessons): void
     {
-        return $this->groups;
+        $this->lessons = $lessons;
     }
 
     /**
-     * @param Group|null $groups
+     * @return Collection
      */
-    public function setGroups(?Group $groups): void
+    public function getDoneHomeworks(): Collection
     {
-        $this->groups = $groups;
+        return $this->doneHomeworks;
     }
-
-
 }

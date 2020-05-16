@@ -3,6 +3,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,6 +52,24 @@ class Student
      * @ORM\Column(type="datetime")
      */
     private ?\DateTime $updatedAt;
+
+    /**
+     * Many Groups have Many Users
+     * @ORM\ManyToMany(targetEntity="Student", mappedBy="groups")
+     */
+    private $groups;
+
+    /**
+     * One Student has many DoneHomework
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="DoneHomeworks", mappedBy="student")
+     */
+    private $doneHomeworks;
+
+    public function __construct() {
+        $this->groups = new ArrayCollection();
+        $this->doneHomeworks = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -145,5 +165,21 @@ class Student
     public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getGroups(): ArrayCollection
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getDoneHomeworks(): Collection
+    {
+        return $this->doneHomeworks;
     }
 }
