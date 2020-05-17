@@ -62,7 +62,7 @@ class Student
     /**
      * One Student has many DoneHomework
      * @var Collection
-     * @ORM\OneToMany(targetEntity="DoneHomeworks", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="DoneHomework", mappedBy="student")
      */
     private $doneHomeworks;
 

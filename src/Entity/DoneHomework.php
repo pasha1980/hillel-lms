@@ -6,13 +6,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class DoneHomeworks
+ * Class DoneHomework
  * @package App\Entity
  * @ORM\Entity()
- * @ORM\Table(name="doneHomeworks")
+ * @ORM\Table(name="done_homeworks")
  */
 
-class DoneHomeworks
+class DoneHomework
 {
     /**
      * @var int|null
@@ -51,7 +51,7 @@ class DoneHomeworks
      * @var Homework|null
      * @ORM\ManyToOne(targetEntity="Homework", inversedBy="doneHomeworks")
      */
-    private $homeworks;
+    private $homework;
 
     /**
      * Many DoneHomework has one Student
@@ -143,17 +143,17 @@ class DoneHomeworks
     /**
      * @return Homework|null
      */
-    public function getHomeworks(): ?Homework
+    public function getHomework(): ?Homework
     {
-        return $this->homeworks;
+        return $this->homework;
     }
 
     /**
      * @param Homework|null $homeworks
      */
-    public function setHomeworks(?Homework $homeworks): void
+    public function setHomework(?Homework $homework): void
     {
-        $this->homeworks = $homeworks;
+        $this->homework = $homework;
     }
 
     /**
